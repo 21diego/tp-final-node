@@ -1,0 +1,25 @@
+{
+  "name": "tpfinal_node",
+  "version": "1.0.0",
+  "description": "It is the project for Taller Web 2 in NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "dev" : "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CrisGadea/tp-final-node.git"
+  },
+  "author": "Cristian Gadea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CrisGadea/tp-final-node/issues"
+  },
+  "homepage": "https://github.com/CrisGadea/tp-final-node#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase": "^8.6.8",
+    "mongo": "",
+    "nodemon": "^2.0.7"
+  }
+}

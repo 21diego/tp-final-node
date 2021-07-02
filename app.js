@@ -37,6 +37,25 @@ app.get('/users', (req,res) => {
     });
     
 })
+
+app.post('/register', (req, res) => {
+    console.log("JSON:" + JSON.stringify(req.body));
+    //let body = JSON.parse(req.body);
+    //res.send(`Hello World! ${req.method} : ${req.body.usuario}`)
+    res.json({
+        bienvenido: `${req.body.usuario}`
+    })
+});
+
+app.post('/login', (req, res) => {
+    console.log("JSON:" + JSON.stringify(req.body));
+    //let body = JSON.parse(req.body);
+    //res.send(`Hello World! ${req.method} : ${req.body.usuario}`)
+    res.json({
+        bienvenido: `${req.body.usuario}`
+    })
+});
+
 /*
 app.get('/', (req, res) => {
     console.log("Hola usuario")
@@ -52,14 +71,7 @@ app.get('/user/:user', (req, res) => {
     });
 });
 
-app.post('/', (req, res) => {
-    console.log("JSON:" + JSON.stringify(req.body));
-    //let body = JSON.parse(req.body);
-    //res.send(`Hello World! ${req.method} : ${req.body.usuario}`)
-    res.json({
-        bienvenido: `${req.body.usuario}`
-    })
-});
+
 
 app.put('/', (req, res) => {
     res.send(`Hello World! ${req.method}`)

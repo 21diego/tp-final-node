@@ -38,7 +38,7 @@ app.get('/users', (req,res) => {
     
 })
 
-app.post('/register', (req, res) => {
+app.post('/api/register', (req, res) => {
     console.log("JSON:" + JSON.stringify(req.body));
     //let body = JSON.parse(req.body);
     //res.send(`Hello World! ${req.method} : ${req.body.usuario}`)
@@ -47,7 +47,7 @@ app.post('/register', (req, res) => {
     })
 });
 
-app.post('/login', (req, res) => {
+app.post('/api/login', (req, res) => {
     console.log("JSON:" + JSON.stringify(req.body));
     //let body = JSON.parse(req.body);
     //res.send(`Hello World! ${req.method} : ${req.body.usuario}`)

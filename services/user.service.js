@@ -9,7 +9,6 @@ const register = (email, password, name) => {
         // Signed in
         var user = userCredential.user;
         createUser(user)
-        console.log("user: " + JSON.stringify(user));
         // ...
     })
     .catch((error) => {
@@ -29,7 +28,26 @@ const createUser = ( { uid, displayName, email}) => {
 }
 
 
+const login = (email, password) => {
+    console.log("Iniciando con el usuario: " + email)
+    auth.signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+        // Signed in
+        var { uid, displayName, email} = userCredential.user;
+        console.log(uid, displayName, email);
+        // ...
+    })
+    .catch((error) => {
+        console.log("entro al catch")
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log("errorCode: " + errorCode);
+        console.log("errorMessage: " + errorMessage);
+    });
+}
+
 
 module.exports = {
-    register
+    register,
+    login
 }

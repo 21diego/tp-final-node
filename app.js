@@ -45,7 +45,7 @@ app.get('/users', (req,res) => {
     
 })
 
-app.get('/market',(req,res) => {   
+app.get('/api/market',(req,res) => {   
     
    getProducts(req,res);
     
@@ -56,10 +56,10 @@ app.get('/api/logout',(req,res) => {
     logout(res);
 })
 
-app.get('/api/user'),(req,res)=> {
+app.get('/api/user',(req,res)=> {
     console.log("entra al get user");
     getCurrentUser(res)
-}
+})
 
 app.get('/api/algo'),(req,res)=> {
     console.log("entra al get user");

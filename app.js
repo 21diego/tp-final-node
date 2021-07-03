@@ -1,6 +1,8 @@
 //Archivo de configuracion de la app
-const express = require('express');
-const db = require('./firebase.js').database();
+import {getProducts} from './controller/marketController.js';
+import express from 'express';
+import initializer from './firebase.js'
+const db = initializer.initializer.database();
 
 const app = express();
 
@@ -37,6 +39,11 @@ app.get('/users', (req,res) => {
     });
     
 })
+app.get('/market',(req,res) => {   
+    
+   getProducts(req,res);
+    
+});
 /*
 app.get('/', (req, res) => {
     console.log("Hola usuario")
@@ -69,4 +76,4 @@ app.delete('/', (req, res) => {
     res.send(`Hello World! ${req.method}`)
 });
 */
-module.exports = app;
+export  {app};

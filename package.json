@@ -6,6 +6,7 @@
   "scripts": {
     "dev" : "nodemon index.js"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CrisGadea/tp-final-node.git"

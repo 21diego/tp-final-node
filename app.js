@@ -1,7 +1,7 @@
 //Archivo de configuracion de la app
 const express = require('express');
 const db = require('./firebase.js').database();
-const { register, login, logout } = require('./services/user.service.js');
+const { register, login, logout, getCurrentUser } = require('./services/user.service.js');
 
 const app = express();
 
@@ -42,6 +42,15 @@ app.get('/users', (req,res) => {
 app.get('/api/logout',(req,res) => {
     logout(res);
 })
+
+app.get('/api/user'),(req,res)=> {
+    console.log("entra al get user");
+    getCurrentUser(res)
+}
+
+app.get('/api/algo'),(req,res)=> {
+    console.log("entra al get user");
+}
 
 app.post('/api/register', (req, res) => {
     console.log("JSON:" + JSON.stringify(req.body));

@@ -61,15 +61,22 @@ const login = (email, password, response) => {
 const logout = (response) => {
     auth.signOut().then(() => {
         response.send({
-            user: auth.createUser,
+            user: auth.currentUser,
             state: true
         })
     })
 }
 
-
+const getCurrentUser = (response) => {
+    console.log("usuario actual: "+auth.currentUser);
+    response.send({
+        user: auth.currentUser,
+        state: true
+    })
+}
 module.exports = {
     register,
     login,
-    logout
+    logout,
+    getCurrentUser
 }

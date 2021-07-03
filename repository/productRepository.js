@@ -1,6 +1,6 @@
 
 import initializer from '../firebase.js'
-const db = initializer.initializer.database();
+const db = initializer.database();
 export function getListProducts(res){
     let ref = db.ref("products/");
     

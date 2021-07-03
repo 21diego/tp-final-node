@@ -3,12 +3,9 @@
 import {getProducts} from './controller/marketController.js';
 import express from 'express';
 import initializer from './firebase.js'
-const db = initializer.initializer.database();
-import { register } from './services/user.service.js';
-import { login } from './services/user.service.js';
-import { logout } from './services/user.service.js';
-import { getCurrentUser } from './services/user.service.js';
+import { register, login, logout, getCurrentUser } from './services/user.service.js';
 
+const db = initializer.database();
 const app = express();
 
 let isLogin = () => true;
@@ -61,14 +58,11 @@ app.get('/api/user',(req,res)=> {
     getCurrentUser(res)
 })
 
-app.get('/api/algo'),(req,res)=> {
-    console.log("entra al get user");
-}
 
 app.post('/api/register', (req, res) => {
     console.log("JSON:" + JSON.stringify(req.body));
 
-    register(req.body.email, req.body.password, req.body.name, res);
+    register(req.body.email, req.body.password, req.body.name, req.body.lastname, req.body.address, res);
    
 });
 

@@ -1,6 +1,7 @@
-const auth = require('../firebase.js').auth();
-const db = require('../firebase.js').database();
+import  initializer  from '../firebase.js';
 
+const db = initializer.database();
+const auth = initializer.auth();
 
 const register = (email, password, name, response) => {
     console.log("Registrando al usuario: " + name)
@@ -13,7 +14,8 @@ const register = (email, password, name, response) => {
         }).then(() =>{
             createUser(user);
             response.send({
-                user: `Registrado el usuario: ${(user.email)}`,
+                email: user.email,
+                name: user.displayName,
                 state: true
             })
 
@@ -43,9 +45,10 @@ const login = (email, password, response) => {
     auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
         // Signed in
-        var { email} = userCredential.user;
+        var { email, displayName } = userCredential.user;
         response.send({
-            user: `iniciado con usuario: ${(email)}`,
+            name: displayName,
+            email: email,
             state: true
         })
     })
@@ -61,20 +64,30 @@ const login = (email, password, response) => {
 const logout = (response) => {
     auth.signOut().then(() => {
         response.send({
-            user: auth.currentUser,
-            state: true
+            name: null,
+            email: null,
+            state: false
         })
     })
 }
 
 const getCurrentUser = (response) => {
-    console.log("usuario actual: "+auth.currentUser);
-    response.send({
-        user: auth.currentUser,
-        state: true
-    })
+    if(auth.currentUser){
+        response.send({
+            name: auth.currentUser.displayName,
+            email: auth.currentUser.email,
+            state: true
+        })
+    } else {
+        response.send({
+            name: null,
+            email: null,
+            state: false
+        })
+    }
+    
 }
-module.exports = {
+export  {
     register,
     login,
     logout,

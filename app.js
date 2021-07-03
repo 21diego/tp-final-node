@@ -1,7 +1,7 @@
 //Archivo de configuracion de la app
 const express = require('express');
 const db = require('./firebase.js').database();
-const { register, login } = require('./services/user.service.js');
+const { register, login, logout } = require('./services/user.service.js');
 
 const app = express();
 
@@ -39,21 +39,20 @@ app.get('/users', (req,res) => {
     
 })
 
+app.get('/api/logout',(req,res) => {
+    logout(res);
+})
+
 app.post('/api/register', (req, res) => {
     console.log("JSON:" + JSON.stringify(req.body));
-    res.json({
-        bienvenido: `Registrando al usuario: ${req.body.name}`
-    })
 
-    register(req.body.email, req.body.password, req.body.name);
+    register(req.body.email, req.body.password, req.body.name, res);
+   
 });
 
 app.post('/api/login', (req, res) => {
     console.log("JSON:" + JSON.stringify(req.body));
-    res.json({
-        bienvenido: `Iniciando al usuario: ${req.body.email}`
-    })
-    login(req.body.email, req.body.password);
+    login(req.body.email, req.body.password,res);
 });
 
 /*

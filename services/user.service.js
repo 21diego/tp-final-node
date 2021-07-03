@@ -2,13 +2,23 @@ const auth = require('../firebase.js').auth();
 const db = require('../firebase.js').database();
 
 
-const register = (email, password, name) => {
+const register = (email, password, name, response) => {
     console.log("Registrando al usuario: " + name)
     auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
         // Signed in
         var user = userCredential.user;
-        createUser(user)
+        user.updateProfile({
+            displayName: name
+        }).then(() =>{
+            createUser(user);
+            response.send({
+                user: `Registrado el usuario: ${(user.email)}`,
+                state: true
+            })
+
+        })
+        
         // ...
     })
     .catch((error) => {
@@ -28,14 +38,16 @@ const createUser = ( { uid, displayName, email}) => {
 }
 
 
-const login = (email, password) => {
+const login = (email, password, response) => {
     console.log("Iniciando con el usuario: " + email)
     auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
         // Signed in
-        var { uid, displayName, email} = userCredential.user;
-        console.log(uid, displayName, email);
-        // ...
+        var { email} = userCredential.user;
+        response.send({
+            user: `iniciado con usuario: ${(email)}`,
+            state: true
+        })
     })
     .catch((error) => {
         console.log("entro al catch")
@@ -46,8 +58,18 @@ const login = (email, password) => {
     });
 }
 
+const logout = (response) => {
+    auth.signOut().then(() => {
+        response.send({
+            user: auth.createUser,
+            state: true
+        })
+    })
+}
+
 
 module.exports = {
     register,
-    login
+    login,
+    logout
 }

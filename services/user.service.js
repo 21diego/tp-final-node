@@ -1,5 +1,6 @@
-const auth = require('../firebase.js').auth();
-const db = require('../firebase.js').database();
+import initializer from '../firebase.js';
+const auth = initializer.initializer.auth();
+const db = initializer.initializer.database();
 
 
 const register = (email, password, name, response) => {
@@ -74,9 +75,5 @@ const getCurrentUser = (response) => {
         state: true
     })
 }
-module.exports = {
-    register,
-    login,
-    logout,
-    getCurrentUser
-}
+
+export {register,getCurrentUser,login,logout}

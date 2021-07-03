@@ -4,7 +4,10 @@ import {getProducts} from './controller/marketController.js';
 import express from 'express';
 import initializer from './firebase.js'
 const db = initializer.initializer.database();
-const { register, login, logout, getCurrentUser } = require('./services/user.service.js');
+import { register } from './services/user.service.js';
+import { login } from './services/user.service.js';
+import { logout } from './services/user.service.js';
+import { getCurrentUser } from './services/user.service.js';
 
 const app = express();
 

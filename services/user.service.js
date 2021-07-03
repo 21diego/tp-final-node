@@ -3,7 +3,7 @@ import  initializer  from '../firebase.js';
 const db = initializer.database();
 const auth = initializer.auth();
 
-const register = (email, password, name, response) => {
+const register = (email, password, name, lastname, address, response) => {
     console.log("Registrando al usuario: " + name)
     auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
@@ -12,7 +12,7 @@ const register = (email, password, name, response) => {
         user.updateProfile({
             displayName: name
         }).then(() =>{
-            createUser(user);
+            createUser(user.uid, user.displayName, user.email, lastname, address);
             response.send({
                 email: user.email,
                 name: user.displayName,
@@ -32,10 +32,13 @@ const register = (email, password, name, response) => {
     });
 }
 
-const createUser = ( { uid, displayName, email}) => {
+const createUser = (  uid, displayName, email, lastname, address) => {
     db.ref('users/' + uid).set({
         name: displayName ? displayName : "Anonimo",
-        email: email
+        email: email,
+        lastname: lastname,
+        address: address
+
     })
 }
 

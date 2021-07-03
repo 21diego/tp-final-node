@@ -55,6 +55,7 @@ app.get('/api/logout',(req,res) => {
     logout(res);
 })
 
+
 app.get('/api/user',(req,res)=> {
     console.log("entra al get user");
     getCurrentUser(res)
@@ -64,7 +65,7 @@ app.get('/api/user',(req,res)=> {
 app.post('/api/register', (req, res) => {
     console.log("JSON:" + JSON.stringify(req.body));
 
-    register(req.body.email, req.body.password, req.body.name, res);
+    register(req.body.email, req.body.password, req.body.name, req.body.lastname, req.body.address, res);
    
 });
 

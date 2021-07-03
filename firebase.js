@@ -1,10 +1,8 @@
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
-const firebase = require("firebase/app");
+import firebase from 'firebase';
 
 // Add the Firebase services that you want to use
-require("firebase/auth");
-require("firebase/database");
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -21,4 +19,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const initializer = firebase.initializeApp(firebaseConfig);
 
-module.exports = initializer;
+export default {initializer}

@@ -1,8 +1,10 @@
 //Archivo de configuracion de la app
+
 import {getProducts} from './controller/marketController.js';
 import express from 'express';
 import initializer from './firebase.js'
 const db = initializer.initializer.database();
+const { register, login, logout, getCurrentUser } = require('./services/user.service.js');
 
 const app = express();
 
@@ -39,11 +41,39 @@ app.get('/users', (req,res) => {
     });
     
 })
+
 app.get('/market',(req,res) => {   
     
    getProducts(req,res);
     
 });
+
+
+app.get('/api/logout',(req,res) => {
+    logout(res);
+})
+
+app.get('/api/user'),(req,res)=> {
+    console.log("entra al get user");
+    getCurrentUser(res)
+}
+
+app.get('/api/algo'),(req,res)=> {
+    console.log("entra al get user");
+}
+
+app.post('/api/register', (req, res) => {
+    console.log("JSON:" + JSON.stringify(req.body));
+
+    register(req.body.email, req.body.password, req.body.name, res);
+   
+});
+
+app.post('/api/login', (req, res) => {
+    console.log("JSON:" + JSON.stringify(req.body));
+    login(req.body.email, req.body.password,res);
+});
+
 /*
 app.get('/', (req, res) => {
     console.log("Hola usuario")
@@ -59,14 +89,7 @@ app.get('/user/:user', (req, res) => {
     });
 });
 
-app.post('/', (req, res) => {
-    console.log("JSON:" + JSON.stringify(req.body));
-    //let body = JSON.parse(req.body);
-    //res.send(`Hello World! ${req.method} : ${req.body.usuario}`)
-    res.json({
-        bienvenido: `${req.body.usuario}`
-    })
-});
+
 
 app.put('/', (req, res) => {
     res.send(`Hello World! ${req.method}`)

@@ -6,8 +6,6 @@ import initializer from './firebase.js'
 import { register, login, logout, getCurrentUser } from './services/user.service.js';
 
 const db = initializer.database();
-
-
 const app = express();
 
 let isLogin = () => true;
@@ -44,7 +42,7 @@ app.get('/users', (req,res) => {
     
 })
 
-app.get('/market',(req,res) => {   
+app.get('/api/market',(req,res) => {   
     
    getProducts(req,res);
     
@@ -54,7 +52,6 @@ app.get('/market',(req,res) => {
 app.get('/api/logout',(req,res) => {
     logout(res);
 })
-
 
 app.get('/api/user',(req,res)=> {
     console.log("entra al get user");

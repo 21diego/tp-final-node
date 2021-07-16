@@ -14,10 +14,13 @@ const register = (email, password, name, lastname, address, response) => {
             displayName: name
         }).then(() =>{
             createUser(user.uid, user.displayName, user.email, lastname, address);
+            enviarEmailVerificacion();
             response.send({
                 email: user.email,
                 name: user.displayName,
-                state: true
+                state: true,
+                emailVerified: user.emailVerified,
+                apiKey: user.apiKey
             })
 
         })
@@ -25,11 +28,11 @@ const register = (email, password, name, lastname, address, response) => {
         // ...
     })
     .catch((error) => {
-        console.log("entro al catch")
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log("errorCode: " + errorCode);
-        console.log("errorMessage: " + errorMessage);
+        response.send({
+            error: true,
+            errorCode: error.code,
+            errorMessage: error.message
+        })
     });
 }
 
@@ -43,6 +46,15 @@ const createUser = (  uid, displayName, email, lastname, address) => {
     })
 }
 
+const enviarEmailVerificacion = () => {
+    auth.currentUser.sendEmailVerification()
+    .then( response => {
+        console.log(response);
+    }).catch( error => {
+        console.log(error);
+    })
+}
+
 
 const login = (email, password, response) => {
     console.log("Iniciando con el usuario: " + email)
@@ -53,40 +65,59 @@ const login = (email, password, response) => {
         response.send({
             name: displayName,
             email: email,
-            state: true
+            state: true,
+            error: false
         })
     })
     .catch((error) => {
-        console.log("entro al catch")
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log("errorCode: " + errorCode);
-        console.log("errorMessage: " + errorMessage);
+        response.send({
+            error: true,
+            errorCode: error.code,
+            errorMessage: error.message
+        })
     });
 }
 
 const logout = (response) => {
-    auth.signOut().then(() => {
+    auth.signOut()
+    .then(() => {
         response.send({
             name: null,
             email: null,
-            state: false
+            state: false,
+            error: false
         })
     })
+    .catch((error) => {
+        console.log("entro al catch")
+        response.send({
+            error: true,
+            errorCode: error.code,
+            errorMessage: error.message
+        })
+    });
 }
 
 const getCurrentUser = (response) => {
     if(auth.currentUser){
+        console.log("entro al current")
         response.send({
             name: auth.currentUser.displayName,
             email: auth.currentUser.email,
-            state: true
+            state: true,
+            emailVerified: auth.currentUser.emailVerified,
+            apiKey: auth.currentUser.apiKey
         })
     } else {
         response.send({
             name: null,
             email: null,
-            state: false
+            state: false,
+            emailVerified: false,
+            apiKey: null,
+            error: true,
+            errorCode: 'userNotSigned',
+            errorMessage: 'El usuario no esta en sesion'
         })
     }
     

@@ -54,7 +54,6 @@ app.get('/api/logout',(req,res) => {
 })
 
 app.get('/api/user',(req,res)=> {
-    console.log("entra al get user");
     getCurrentUser(res)
 })
 

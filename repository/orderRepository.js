@@ -7,5 +7,6 @@ export function saveOrder(res,order){
     console.log("entro a save Order");
     var uuid=uuidv4();
     db.ref('orders/' + uuid).set(order);
-    res.status(201).json({"Created": true});
+    order.codigo = uuid;
+    res.status(201).json(order);
 }

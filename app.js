@@ -74,6 +74,7 @@ app.get('/api/market/product/:id', (req, res)=> {
 });
 
 app.post('/api/order', (req, res) => {
+    console.log("JSON:" + JSON.stringify(req.body));
     generateOrder(req,res);
 });
 /*

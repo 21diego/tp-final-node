@@ -16,11 +16,13 @@ const register = (email, password, name, lastname, address, response) => {
             createUser(user.uid, user.displayName, user.email, lastname, address);
             enviarEmailVerificacion();
             response.send({
+                uid: user.uid,
                 email: user.email,
                 name: user.displayName,
                 state: true,
                 emailVerified: user.emailVerified,
-                apiKey: user.apiKey
+                apiKey: user.apiKey,
+                error: false
             })
 
         })
@@ -61,11 +63,14 @@ const login = (email, password, response) => {
     auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
         // Signed in
-        var { email, displayName } = userCredential.user;
+        var user = userCredential.user;
         response.send({
-            name: displayName,
-            email: email,
+            uid: user.uid,
+            name: user.displayName,
+            email: user.email,
             state: true,
+            emailVerified: user.emailVerified,
+            apiKey: user.apiKey,
             error: false
         })
     })
@@ -85,6 +90,8 @@ const logout = (response) => {
             name: null,
             email: null,
             state: false,
+            emailVerified: null,
+            apiKey: null,
             error: false
         })
     })
@@ -102,14 +109,17 @@ const getCurrentUser = (response) => {
     if(auth.currentUser){
         console.log("entro al current")
         response.send({
+            uid: auth.currentUser.uid,
             name: auth.currentUser.displayName,
             email: auth.currentUser.email,
             state: true,
             emailVerified: auth.currentUser.emailVerified,
-            apiKey: auth.currentUser.apiKey
+            apiKey: auth.currentUser.apiKey,
+            error: false
         })
     } else {
         response.send({
+            uid: null,
             name: null,
             email: null,
             state: false,

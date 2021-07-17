@@ -1,9 +1,10 @@
 //Archivo de configuracion de la app
 
-import {getProducts} from './controller/marketController.js';
+import {getProduct, getProducts} from './controller/marketController.js';
 import express from 'express';
 import initializer from './firebase.js'
 import { register, login, logout, getCurrentUser } from './services/user.service.js';
+import { generateOrder } from './controller/orderController.js';
 
 const db = initializer.database();
 const app = express();
@@ -14,8 +15,6 @@ let logger = (req, res, next) => {
     console.log('Peticion de tipo: ', req.method );
     next();
 }
-
-
 
 app.use((req, res, next) => {
     if(isLogin()){
@@ -71,6 +70,13 @@ app.post('/api/login', (req, res) => {
     login(req.body.email, req.body.password,res);
 });
 
+app.get('/api/market/product/:id', (req, res)=> {
+    getProduct(req,res);
+});
+
+app.post('/api/order', (req, res) => {
+    generateOrder(req,res);
+});
 /*
 app.get('/', (req, res) => {
     console.log("Hola usuario")

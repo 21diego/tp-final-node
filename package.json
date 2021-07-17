@@ -4,7 +4,7 @@
   "description": "It is the project for Taller Web 2 in NodeJS",
   "main": "index.js",
   "scripts": {
-    "dev" : "nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "type": "module",
   "repository": {
@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "firebase": "^8.6.8",
     "mongo": "",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "uuid": "^8.3.2"
   }
 }
